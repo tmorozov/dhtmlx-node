@@ -97,6 +97,7 @@ var app = (function (window) {
 		form = initForm(layout.cells("b"));
 		grid.load('/users', 'js');
 	});
+	
 	// window.dhtmlxEvent(window, "load", function(){
 	// 	layout = initLayout();
 	// 	menu = initMenu(layout);
