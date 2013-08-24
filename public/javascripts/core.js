@@ -18,6 +18,8 @@
 		return obj;
 	};
 
+	// Observer
+	// on/off/trigger
 	core.Observer = {
 		on: function(name, callback) {
 			this._events || (this._events = {});
@@ -48,15 +50,39 @@
 		}
 	}
 
+	// Application
+	// start/stop
+	core.Application = function () {
+	}
+
+	core.extend(core.Application.prototype, core.Observer, {
+		addInitializer: function(func) {
+			var callbacks = this._initializers = this._initializers || [];
+			if(callbacks.indexOf(func) === -1) {
+				callbacks.push(func);
+			}
+			return this;
+		},
+
+		start: function(options) {
+			var callbacks = this._initializers;
+			if(callbacks) {
+				var l = callbacks.length;
+				var i = -1;
+				while(++i < l) {
+					callbacks[i](options);
+				}
+			}
+		}
+	});
+
 }).call(this);
 
 
-// Events(Observer)
-// on/off/trigger
 
 // Module: Events
 // multifile
 // start/stop
 
-// Application: Module
+// Application
 // start/stop
