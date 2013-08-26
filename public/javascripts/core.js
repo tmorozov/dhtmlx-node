@@ -50,13 +50,25 @@
 		}
 	}
 
-	// Application
-	// start/stop
-	core.Application = function (sandbox) {
-		this.sandbox = core.extend(core.Observer, sandbox || {});
-	}
+	core.Modulizer = {
+		module: function (name, cb) {
+			this._modules = this._modules || {};
+			var mod = this._modules[name];
+			if (!mod) {
+				mod = core.extend({}, 
+					core.Initializer,
+					core.Observer
+				);
+			}
+			if (cb) {
+				cb.call(mod, mod, this.sandbox);
+			}
+			this._modules[name] = mod;
+			return mod;
+		}
+	};
 
-	core.extend(core.Application.prototype, {
+	core.Initializer = {
 		addInitializer: function(func) {
 			var callbacks = this._initializers = this._initializers || [];
 			if(callbacks.indexOf(func) === -1) {
@@ -66,6 +78,15 @@
 		},
 
 		start: function(options) {
+			var modules = this._modules;
+			if (modules) {
+				for(name in modules) {
+					if (modules.hasOwnProperty(name)) {
+						modules[name].start(options);
+					}
+				}
+			}
+
 			var callbacks = this._initializers;
 			if(callbacks) {
 				var l = callbacks.length;
@@ -74,22 +95,17 @@
 					callbacks[i](options);
 				}
 			}
-		},
-
-		module: function (name, cb) {
-			this._modules = this._modules || {};
-			var mod = this._modules[name] = this._modules[name] || {};
-			if (cb) {
-				cb.call(mod, mod, this.sandbox);
-			}
-			return mod;
 		}
+	};
 
-	});
+	core.Application = function (sandbox) {
+		this.sandbox = core.extend(core.Observer, sandbox || {});
+	}
+
+	core.extend(
+		core.Application.prototype, 
+		core.Initializer, 
+		core.Modulizer
+	);
 
 }).call(this);
-
-
-// Module: Events
-// multifile
-// start/stop
