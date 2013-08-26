@@ -24,10 +24,13 @@ module.exports = function(config) {
       
     ],
 
-
+    preprocessors: {
+      'public/javascripts/vendors/core.js': ['coverage']
+    },
+    
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
 
     // web server port
