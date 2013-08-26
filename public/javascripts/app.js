@@ -12,18 +12,20 @@ function initLayout() {
 
 app.addInitializer(function (options) {
 	this.layout = initLayout();
-	options['menu'] = {
-		holder: this.layout
-	};
-	options['toolbar'] = {
-		holder: this.layout
-	};
-	options['contacts'] = {
-		holder: this.layout.cells("a")
-	};
-	options['details'] = {
-		holder: this.layout.cells("b")
-	};
+	core.extend(options, {
+		menu: {
+			holder: this.layout
+		},
+		toolbar: {
+			holder: this.layout
+		},
+		contacts: {
+			holder: this.layout.cells("a")
+		},
+		details: {
+			holder: this.layout.cells("b")
+		}
+	});
 });
 
 
