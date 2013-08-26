@@ -2,10 +2,10 @@ var expect = chai.expect;
 
 describe('Core', function() {
 	it('should be defined', function() {
-		expect(core).to.be.defined;
+		expect(core).to.be.ok;
 	});
 
-	describe('extend', function() {
+	describe('#extend', function() {
 		it('should be a function', function () {
 			expect(core.extend).to.be.a('function');
 		});

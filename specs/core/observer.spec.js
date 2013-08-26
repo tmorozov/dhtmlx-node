@@ -3,7 +3,7 @@ var expect = chai.expect;
 describe('Core', function() {
 	describe('Observer', function() {
 		it('should be defined', function() {
-			expect(core.Observer).to.be.defined;
+			expect(core.Observer).to.be.ok;
 		});
 
 		it('should be object', function() {

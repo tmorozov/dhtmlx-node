@@ -52,10 +52,11 @@
 
 	// Application
 	// start/stop
-	core.Application = function () {
+	core.Application = function (sandbox) {
+		this.sandbox = core.extend(core.Observer, sandbox || {});
 	}
 
-	core.extend(core.Application.prototype, core.Observer, {
+	core.extend(core.Application.prototype, {
 		addInitializer: function(func) {
 			var callbacks = this._initializers = this._initializers || [];
 			if(callbacks.indexOf(func) === -1) {
@@ -73,16 +74,22 @@
 					callbacks[i](options);
 				}
 			}
+		},
+
+		module: function (name, cb) {
+			this._modules = this._modules || {};
+			var mod = this._modules[name] = this._modules[name] || {};
+			if (cb) {
+				cb.call(mod, mod, this.sandbox);
+			}
+			return mod;
 		}
+
 	});
 
 }).call(this);
 
 
-
 // Module: Events
 // multifile
-// start/stop
-
-// Application
 // start/stop

@@ -19,16 +19,6 @@ describe('Core', function() {
 				});
 			});
 
-			describe('Observer', function() {
-				it('should have #on', function () {
-					expect(proto.on).to.be.a('function');
-				});
-
-				it('should have #trigger', function () {
-					expect(proto.trigger).to.be.a('function');
-				});
-			});
-
 		});
 
 		describe('on #start', function () {
