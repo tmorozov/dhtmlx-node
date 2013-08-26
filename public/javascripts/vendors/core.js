@@ -6,7 +6,7 @@
 
 	var slice = [].slice;
 
-	core.extend = function(obj) {
+	function extend(obj) {
 		slice.call(arguments, 1).forEach( function(source) {
 			if (source) {
 				for (var prop in source) {
@@ -18,9 +18,7 @@
 		return obj;
 	};
 
-	// Observer
-	// on/off/trigger
-	core.Observer = {
+	var Observer = {
 		on: function(name, callback) {
 			this._events || (this._events = {});
 			var events = this._events[name] || (this._events[name] = []);
@@ -50,25 +48,21 @@
 		}
 	}
 
-	core.Modulizer = {
+	var Modulizer = {
 		module: function (name, cb) {
 			this._modules = this._modules || {};
-			var mod = this._modules[name];
-			if (!mod) {
-				mod = core.extend({}, 
-					core.Initializer,
-					core.Observer
-				);
+			if (!this._modules[name]) {
+				this._modules[name] = new Module(); 
 			}
+			var mod = this._modules[name];
 			if (cb) {
 				cb.call(mod, mod, this.sandbox);
 			}
-			this._modules[name] = mod;
 			return mod;
 		}
 	};
 
-	core.Initializer = {
+	var Initializer = {
 		addInitializer: function(func) {
 			var callbacks = this._initializers = this._initializers || [];
 			if(callbacks.indexOf(func) === -1) {
@@ -98,14 +92,27 @@
 		}
 	};
 
-	core.Application = function (sandbox) {
-		this.sandbox = core.extend(core.Observer, sandbox || {});
+	function Module () {
 	}
 
-	core.extend(
-		core.Application.prototype, 
-		core.Initializer, 
-		core.Modulizer
+	extend(
+		Module.prototype, 
+		Initializer, 
+		Observer
 	);
+
+	function Application (sandbox) {
+		this.sandbox = extend({}, Observer, sandbox || {});
+	}
+
+	extend(
+		Application.prototype, 
+		Initializer, 
+		Modulizer
+	);
+
+	core.Application = Application;
+	core.Observer = Observer;
+	core.extend = extend;
 
 }).call(this);
