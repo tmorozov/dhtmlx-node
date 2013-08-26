@@ -78,21 +78,21 @@
 		},
 
 		start: function(options) {
-			var modules = this._modules;
-			if (modules) {
-				for(name in modules) {
-					if (modules.hasOwnProperty(name)) {
-						modules[name].start(options);
-					}
-				}
-			}
-
 			var callbacks = this._initializers;
 			if(callbacks) {
 				var l = callbacks.length;
 				var i = -1;
 				while(++i < l) {
 					callbacks[i](options);
+				}
+			}
+
+			var modules = this._modules;
+			if (modules) {
+				for(name in modules) {
+					if (modules.hasOwnProperty(name)) {
+						modules[name].start(options);
+					}
 				}
 			}
 		}

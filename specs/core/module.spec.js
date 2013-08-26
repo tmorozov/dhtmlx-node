@@ -88,6 +88,22 @@ describe('Core', function() {
 				});
 				a.start();
 			});
+
+			it('should call initializers in app before module', function (done) {
+				var i = "";
+				a.addInitializer(function(){
+					i = 'app';
+				});
+
+				a.module('mod_1', function(mod) {
+					mod.addInitializer(function () {
+						expect(i).to.equal('app');
+						done();
+					});
+				});
+
+				a.start();
+			});
 		});
 
 	});

@@ -1,6 +1,0 @@
-var jsonHelpers = (function() {
-
-	return {
-
-	};
-})();
