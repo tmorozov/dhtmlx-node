@@ -1,4 +1,6 @@
 dhtmlx-node
 ===========
 
-How to use dhtmlx with node+express server
+How to use scalable JS architecture core + dhtmlx.
+
+Backend - node+express
