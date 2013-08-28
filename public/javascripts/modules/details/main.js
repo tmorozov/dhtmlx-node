@@ -42,16 +42,21 @@ app.module('details', function(mod, sandbox) {
 //		mod.details.load('/users/'+id, 'js');
 		sandbox.get('/users/'+id).done(function(data) {
 			mod.details.setFormData(data);
+			mod.details.curentId = id;
 		});
-		// 		{
-		// 			id: id,
-		// 	"name": "Вася",
-		// 	"last_name": "Пупкин",
-		// 	"email": "vp@google.com"
-		// });
 	});
 
 	mod.addInitializer(function (opt) {
-		mod.details = initForm(opt.details.holder);
+		var details = initForm(opt.details.holder);
+		details.attachEvent("onButtonClick", function (name, command) {
+			var data = details.getFormData();
+			console.log(data);
+			sandbox.ajax({
+				url: '/users/'+mod.details.curentId,
+				type: 'PUT',
+				data: data
+			});
+		});
+		mod.details = details;
 	});
 });

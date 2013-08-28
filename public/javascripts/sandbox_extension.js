@@ -1,4 +1,5 @@
 
 var sandbox_extension = {
-	get: $.get
+	get: $.get,
+	ajax: $.ajax
 };

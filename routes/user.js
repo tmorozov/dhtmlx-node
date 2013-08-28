@@ -25,3 +25,7 @@ exports.list = function(req, res){
 exports.show = function(req, res){
 	res.send(data.data[req.params.id-1]);
 };
+
+exports.update = function(req, res){
+	res.send(data.data[req.params.id-1]);
+};
