@@ -1,6 +1,7 @@
-/*globals dhtmlXLayoutObject, core */
+/*globals dhtmlXLayoutObject, core, sandbox_extension */
 
-var app = new core.Application({});
+var sandbox_extension = sandbox_extension || {};
+var app = new core.Application(sandbox_extension);
 
 function initLayout() {
 	var layout = new dhtmlXLayoutObject(document.body,"2U");
@@ -30,6 +31,7 @@ app.addInitializer(function (options) {
 
 
 dhtmlx.image_path = "../stylesheets/imgs/";
-DomReady.ready(function() {
+
+$(function() {
 	app.start({});
 });

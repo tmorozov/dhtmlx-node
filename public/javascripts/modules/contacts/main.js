@@ -13,7 +13,14 @@ app.module('contacts', function(mod, sandbox) {
 	}
 
 	mod.addInitializer(function (opt) {
-		mod.contacts = initGrid(opt.contacts.holder);
-		mod.contacts.load('/users', 'js');
+		var contacts = initGrid(opt.contacts.holder);
+		contacts.load('/users', 'js');
+		contacts.attachEvent("onRowSelect", function(rId,cInd){
+			sandbox.trigger('contact:select', rId);
+		});
+
+		mod.contacts = contacts;
 	});
+
+
 });
