@@ -38,3 +38,19 @@ exports.update = function(req, res){
 
 	res.send(user);
 };
+
+exports.create = function(req, res){
+	var update = req.body;
+
+	var user = {
+		name: update.name,
+		last_name: update.last_name,
+		email: update.email
+	};
+
+	users.push(user);
+
+	user = users[users.length-1];
+	user.id = users.length;
+	res.send(user);
+};

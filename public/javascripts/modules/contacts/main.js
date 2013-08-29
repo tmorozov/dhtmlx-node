@@ -26,7 +26,14 @@ app.module('contacts', function(mod, sandbox) {
 		mod.contacts.cells(id,2).setValue(data.email);
 	}
 
+	function insertDataRow(data) {
+		mod.contacts.addRow(data.id, '', null);
+		setDataInRow(data.id, data);
+	}
+
 	sandbox.on('contact:update', setDataInRow);
+	sandbox.on('contact:created', insertDataRow);
+
 
 	function onRowSelect(rId,cInd) {
 		var data = getDataFromRow(rId);

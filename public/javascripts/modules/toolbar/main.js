@@ -1,7 +1,14 @@
 app.module('toolbar', function(mod, sandbox) {
 	function initToolbar(holder) {
 		var toolbar = holder.attachToolbar();
-		toolbar.addText('tb_txt_1', 1, 'toolbar text');
+		toolbar.addButton('add_btn', 1, 'Add', null, null);
+		toolbar.setItemToolTip('add_btn', 'Add Contact');
+
+		toolbar.attachEvent("onclick", function (id) {
+  			if (id === "add_btn" ) {
+				sandbox.trigger('contact:new');
+  			}
+  		});
 		return toolbar;
 	}
 
@@ -9,3 +16,4 @@ app.module('toolbar', function(mod, sandbox) {
 		mod.toolbar = initToolbar(opt.toolbar.holder);
 	});
 });
+

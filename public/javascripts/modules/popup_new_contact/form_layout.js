@@ -1,4 +1,4 @@
-app.module('details', function(mod, sandbox) {
+app.module('popup_new_details', function(mod, sandbox) {
 	mod.initForm = function (holder) {
 		var formData = [ {
 			type: "fieldset",
@@ -25,8 +25,8 @@ app.module('details', function(mod, sandbox) {
 					name: 'email',
 				}, {
 					type:"button",
-					name:"save",
-					value:"Proceed"
+					name:"create",
+					value:"Create"
 				}
 			]
 		}];

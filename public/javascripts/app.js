@@ -25,6 +25,9 @@ app.addInitializer(function (options) {
 		},
 		details: {
 			holder: this.layout.cells("b")
+		},
+		popups: {
+			holder: this.layout
 		}
 	});
 });
