@@ -12,12 +12,35 @@ app.module('contacts', function(mod, sandbox) {
 		return grid;
 	}
 
+	function getDataFromRow(id) {
+		return {
+			name: mod.contacts.cells(id, 0).getValue(),
+			last_name: mod.contacts.cells(id, 1).getValue(),
+			email: mod.contacts.cells(id, 2).getValue(),
+		}
+	}
+
+	function setDataInRow(id, data) {
+		mod.contacts.cells(id,0).setValue(data.name);
+		mod.contacts.cells(id,1).setValue(data.last_name);
+		mod.contacts.cells(id,2).setValue(data.email);
+	}
+
+	sandbox.on('contact:update', setDataInRow);
+
+	function onRowSelect(rId,cInd) {
+		var data = getDataFromRow(rId);
+		sandbox.trigger('contact:select', rId, data);
+	}
+
 	mod.addInitializer(function (opt) {
 		var contacts = initGrid(opt.contacts.holder);
+
+		// could use
+		// mygrid.parse(data,"json");
 		contacts.load('/users', 'js');
-		contacts.attachEvent("onRowSelect", function(rId,cInd){
-			sandbox.trigger('contact:select', rId);
-		});
+
+		contacts.attachEvent("onRowSelect", onRowSelect);
 
 		mod.contacts = contacts;
 	});
