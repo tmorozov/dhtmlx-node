@@ -4,15 +4,39 @@
  */
 
 var users = [{
+		id: 1,
 		"name": "Вася",
 		"last_name": "Пупкин",
 		"email": "vp@google.com"
 	}, {
+		id: 2,
 		"name": "Иван",
 		"last_name": "Иванов",
 		"email": "ii@google.com"
 	}
 ];
+var next_id = 3;
+
+function getUserById(id) {
+	var key = +id;
+	var l = users.length;
+	for (var i=0; i<l; i++) {
+		if(users[i].id === key) {
+			return users[i];
+		}
+	}
+}
+
+function delUserById(id) {
+	var key = +id;
+	var l = users.length;
+	for (var i=0; i<l; i++) {
+		if (users[i].id === key) {
+			users.splice(i, 1);
+			return;
+		}
+	}
+}
 
 exports.list = function(req, res){
 	var data = {
@@ -24,33 +48,40 @@ exports.list = function(req, res){
 };
 
 exports.show = function(req, res){
-	var user = users[req.params.id-1];
+	var user = getUserById(req.params.id);
 	res.send(user);
 };
 
 exports.update = function(req, res){
-	var user = users[req.params.id-1];
+	var user = getUserById(req.params.id);
 	var update = req.body;
-
-	user.name = update.name;
-	user.last_name = update.last_name;
-	user.email = update.email;
+	if(user) {
+		user.name = update.name;
+		user.last_name = update.last_name;
+		user.email = update.email;
+	}
 
 	res.send(user);
+};
+
+exports.del = function(req, res){
+	delUserById(req.params.id);
+	res.send({});
 };
 
 exports.create = function(req, res){
 	var update = req.body;
 
 	var user = {
+		id: next_id,
 		name: update.name,
 		last_name: update.last_name,
 		email: update.email
 	};
 
+	next_id++;
+
 	users.push(user);
 
-	user = users[users.length-1];
-	user.id = users.length;
 	res.send(user);
 };

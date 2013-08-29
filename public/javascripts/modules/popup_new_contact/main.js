@@ -33,8 +33,8 @@ app.module('popup_new_details', function(mod, sandbox) {
 		var size = {
 			tx: 0,
 			ty: 0,
-			w: 220,
-			h: 470
+			w: 240,
+			h: 300
 		};
 		var popup = createPopup(id, size, "New Contact");
 		var form = mod.initForm(popup);

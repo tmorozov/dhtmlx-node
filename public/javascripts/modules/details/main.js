@@ -1,14 +1,17 @@
 app.module('details', function(mod, sandbox) {
-	sandbox.on('contact:select', function (id, data) {
+	sandbox.on('contact:select', function (data) {
 		mod.details.setFormData(data);
-		mod.details.curentId = id;
+	});
+
+	sandbox.on('contact:deleted', function (id) {
+		mod.details.clear();
 	});
 
 	function onFormSubmit(name, command) {
 		var data = mod.details.getFormData();
-		sandbox.put('/users/'+mod.details.curentId, data)
+		sandbox.put('/users/'+data.id, data)
 			.done(function (data) {
-				sandbox.trigger('contact:update', mod.details.curentId, data);
+				sandbox.trigger('contact:update', data);
 			});
 	}
 

@@ -6,6 +6,9 @@ app.module('details', function(mod, sandbox) {
 			label: "User",
 			inputWidth: "auto",
 			list:[ {
+					type:"hidden",
+					name: 'id',
+				},{
 					type:"label",
 					label:'Name'
 				},{
