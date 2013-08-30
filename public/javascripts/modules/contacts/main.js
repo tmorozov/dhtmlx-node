@@ -22,7 +22,6 @@ app.module('contacts', function(mod, sandbox) {
 	}
 
 	function setDataInRow(data) {
-		console.log(data);
 		var id = data.id;
 		mod.contacts.cells(id,0).setValue(data.name);
 		mod.contacts.cells(id,1).setValue(data.last_name);
@@ -34,26 +33,18 @@ app.module('contacts', function(mod, sandbox) {
 		setDataInRow(data);
 	}
 
-	function deleteSelectedContact() {
-		var grid = mod.contacts;
-		var rowId = grid.getSelectedRowId();
-		if (rowId) {
-			sandbox.del('/users/'+rowId)
-				.done(function (data) {
-					sandbox.trigger('contact:deleted', rowId);
-					grid.deleteRow(rowId);
-				});
-		}
+	function deleteContact(id) {
+		mod.contacts.deleteRow(id);
 	}
 
-	sandbox.on('contact:del', deleteSelectedContact);
-	sandbox.on('contact:update', setDataInRow);
+	sandbox.on('contact:deleted', deleteContact);
+	sandbox.on('contact:updated', setDataInRow);
 	sandbox.on('contact:created', insertDataRow);
 
 
 	function onRowSelect(rId,cInd) {
 		var data = getDataFromRow(rId);
-		sandbox.trigger('contact:select', data);
+		sandbox.trigger('contact:selected', data);
 	}
 
 	mod.addInitializer(function (opt) {

@@ -17,12 +17,12 @@ app.module('popup_new_details', function(mod, sandbox) {
 
 	function onFormSubmit(name, command) {
 		var data = mod.form.getFormData();
-		sandbox.post('/users/', data)
-			.done(function (data) {
-				sandbox.trigger('contact:created', data);
-				mod.popup.close();
-			});
+		sandbox.trigger('contact:create', data);
 	}
+
+	sandbox.on('contact:created', function () {
+		mod.popup.close();
+	});
 
 	sandbox.on('contact:new', function () {
 		if ( mod.popup ) {

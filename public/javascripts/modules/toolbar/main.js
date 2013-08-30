@@ -10,15 +10,24 @@ app.module('toolbar', function(mod, sandbox) {
 		toolbar.attachEvent("onclick", function (id) {
 			if (id === "add_btn" ) {
 				sandbox.trigger('contact:new');
-			} else if (id === "del_btn" ) {
-				sandbox.trigger('contact:del');
+			} else if (id === "del_btn" && mod.selectedContactId ) {
+				sandbox.trigger('contact:delete', mod.selectedContactId);
 			}
   		});
 		return toolbar;
 	}
 
+	sandbox.on('contact:selected', function (data) {
+		mod.selectedContactId = data.id;
+	});
+
+	sandbox.on('contact:deleted', function (data) {
+		mod.selectedContactId = null;
+	});
+
 	mod.addInitializer(function (opt) {
 		mod.toolbar = initToolbar(opt.toolbar.holder);
+		mod.selectedContactId = null;
 	});
 });
 
