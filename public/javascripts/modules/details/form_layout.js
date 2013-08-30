@@ -29,7 +29,7 @@ app.module('details', function(mod, sandbox) {
 				}, {
 					type:"button",
 					name:"save",
-					value:"Proceed"
+					value:"Update"
 				}
 			]
 		}];
