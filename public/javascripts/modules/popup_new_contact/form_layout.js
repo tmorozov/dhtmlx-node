@@ -23,7 +23,7 @@ app.module('popup_new_details', function(mod, sandbox) {
 				},{
 					type:"input",
 					name: 'email',
-				}, {
+				},{
 					type:"button",
 					name:"create",
 					value:"Create"

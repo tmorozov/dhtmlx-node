@@ -1,4 +1,4 @@
-
+var url = require('url');
 /*
  * GET users listing.
  */
@@ -38,11 +38,20 @@ function delUserById(id) {
 	}
 }
 
+
 exports.list = function(req, res){
+
+	var url_parts = url.parse(req.url, true);
+	var mask = url_parts.query.mask;
+	var re = RegExp(mask, 'i');
+
 	var data = {
 		"total_count":users.length,
 		"pos":0,
-		"data": users
+		"data": users.filter(function(item){
+			return item.name.search(re) !=-1;
+		}),
+		"mask": mask
 	};
 	res.send(data);
 };

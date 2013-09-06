@@ -4,9 +4,10 @@ var sandbox_extension = sandbox_extension || {};
 var app = new core.Application(sandbox_extension);
 
 function initLayout() {
-	var layout = new dhtmlXLayoutObject(document.body,"2U");
+	var layout = new dhtmlXLayoutObject(document.body,"3W");
 	layout.cells("a").setText("Contacts");
 	layout.cells("b").setText("Contact Details");
+	layout.cells("c").setText("Tools");
 	layout.cells("a").setWidth(500);
 	return layout;
 }
@@ -28,6 +29,9 @@ app.addInitializer(function (options) {
 		},
 		popups: {
 			holder: this.layout
+		},
+		tools: {
+			holder: this.layout.cells('c')
 		}
 	});
 });

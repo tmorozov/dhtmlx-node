@@ -52,7 +52,7 @@
 		module: function (name, cb) {
 			this._modules = this._modules || {};
 			if (!this._modules[name]) {
-				this._modules[name] = new Module(); 
+				this._modules[name] = new Module(this.sandbox);
 			}
 			var mod = this._modules[name];
 			if (cb) {
@@ -92,13 +92,15 @@
 		}
 	};
 
-	function Module () {
+	function Module (sandbox) {
+		this.sandbox = sandbox;
 	}
 
 	extend(
 		Module.prototype, 
 		Initializer, 
-		Observer
+		Observer,
+		Modulizer
 	);
 
 	function Application (sandbox) {
