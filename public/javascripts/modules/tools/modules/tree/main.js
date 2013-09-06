@@ -15,7 +15,7 @@ app.module('tools').module('tree', function(mod, sandbox) {
 		tree.loadJSArray(treeStruct);
 		// prevent movement of elements
 		tree.attachEvent("onDrag", function(sId,tId,id,sObject,tObject){
-			return false;
+			return sObject !== tObject;
 		});
 		return tree;
 	}

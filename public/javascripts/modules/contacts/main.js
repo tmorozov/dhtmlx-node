@@ -1,15 +1,34 @@
 app.module('contacts', function(mod, sandbox) {
 	function initGrid(holder) {
 		var grid = holder.attachGrid();
-		grid.setHeader("Name,Last Name,Email");
-		grid.attachHeader("#text_filter,#text_filter,#text_filter");
-		grid.setInitWidths("100,100,*");
-		grid.setColAlign("left,left,left");
-		grid.setColTypes("ro,ro,ro");
-		grid.setColSorting("str,str,str");
-		grid.setColumnIds("name,last_name,email");
+		grid.setHeader("Name,Last Name,Email,Sub Info");
+		grid.attachHeader("#text_filter,#text_filter,#text_filter,");
+		grid.setInitWidths("100,100,*,*");
+		grid.setColAlign("left,left,left,left");
+		grid.setColTypes("ro,ro,ro,ro");
+		grid.setColSorting("str,str,str,str");
+		grid.setColumnIds("name,last_name,email,sub_info");
+
+		grid.enableDragAndDrop(true);
+		grid.treeToGridElement = treeToGridElement;
+		grid.attachEvent("onDrag", onDrag);
+
 		grid.init();
 		return grid;
+	}
+
+	function onDrag(sId,tId,sObj,tObj,sInd,tInd){
+		if(this === tObj && tId && tObj !== sObj) {
+			var cell = this.cells(tId, 3);
+			if (cell) {
+				cell.setValue(sObj.getItemText(sId));
+			}
+		}
+		return false;
+	}
+
+	function treeToGridElement (tree, treeID, gridID) {
+		// return [2,2,2];
 	}
 
 	function getDataFromRow(id) {
