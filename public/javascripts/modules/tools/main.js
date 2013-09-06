@@ -11,6 +11,9 @@ app.module('tools', function(mod, sandbox) {
 		core.extend(opt.tools, {
 			autocomplete: {
 				holder: layout.cells('a')
+			},
+			tree: {
+				holder: layout.cells('b')
 			}
 		});
 	});

@@ -1,5 +1,5 @@
 app.module('tools').module('autocomplete', function(mod, sandbox) {
-	initForm = function (holder) {
+	function initForm(holder) {
 		var formData = [ {
 			type: "fieldset",
 			name: "data",

@@ -43,15 +43,22 @@ exports.list = function(req, res){
 
 	var url_parts = url.parse(req.url, true);
 	var mask = url_parts.query.mask;
-	var re = RegExp(mask, 'i');
+	var filteredUsers = users;
+	if (mask) {
+		var re = RegExp(
+			mask.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"),
+			'i'
+		);
+
+		filteredUsers = users.filter(function(item){
+			return item.name.search(re) !=-1;
+		})
+	}
 
 	var data = {
 		"total_count":users.length,
 		"pos":0,
-		"data": users.filter(function(item){
-			return item.name.search(re) !=-1;
-		}),
-		"mask": mask
+		"data": filteredUsers
 	};
 	res.send(data);
 };
