@@ -9,11 +9,19 @@ app.module('tools').module('tree', function(mod, sandbox) {
 
 		var tree = holder.attachTree();
 
+		tree.enableDragAndDrop(true);
+		// tree.enableMercyDrag(true); // requires proffesional library
+
 		tree.loadJSArray(treeStruct);
+		// prevent movement of elements
+		tree.attachEvent("onDrag", function(sId,tId,id,sObject,tObject){
+			return false;
+		});
 		return tree;
 	}
 
 	mod.addInitializer(function (opt) {
 		var tree = initTree(opt.tools.tree.holder);
+		mod.tree = tree;
 	});
 });
